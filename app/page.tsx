@@ -1,5 +1,4 @@
 import LoaderEvents from '@/components/LoaderEvents';
-import Navbar from '@/components/nav/Navbar';
 import HowlNetworkModal from '@/components/HowlNetworkModal';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -15,9 +14,6 @@ export default function Home() {
         backgroundRepeat: 'no-repeat',
       }}
     >
-
-      {/* Navbar */}
-      <Navbar />
 
       {/* HOWL Network Modal */}
       <HowlNetworkModal />

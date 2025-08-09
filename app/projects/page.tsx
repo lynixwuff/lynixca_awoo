@@ -1,38 +1,34 @@
 'use client';
 
-import EventFilters from '@/components/events/EventFilters';
-import EventsGrid from '@/components/events/EventsGrid';
-import LoadingState from '@/components/events/LoadingState';
-import ErrorState from '@/components/events/ErrorState';
-import EmptyState from '@/components/events/EmptyState';
-import Pagination from '@/components/events/Pagination';
-import { useEvents } from '@/hooks/useEvents';
-import { useEventFilters } from '@/hooks/useEventFilters';
+import ProjectsGrid from '@/components/projects/ProjectsGrid';
+import ProjectsFilters from '@/components/projects/ProjectsFilters';
+import LoadingState from '@/components/projects/LoadingState';
+import ErrorState from '@/components/projects/ErrorState';
+import EmptyState from '@/components/projects/EmptyState';
+import Pagination from '@/components/projects/Pagination';
+import { useProjects } from '@/hooks/useProjects';
+import { useProjectFilters } from '@/hooks/useProjectFilters';
 
-export default function Events() {
+export default function Projects() {
   // API data fetching
-  const { events, isLoading, error, refetch } = useEvents();
+  const { projects, isLoading, error, refetch } = useProjects();
   
   // Filtering and pagination logic
   const {
     searchTerm,
     setSearchTerm,
-    selectedFilter,
-    setSelectedFilter,
-    selectedLocation,
-    setSelectedLocation,
     sortBy,
     setSortBy,
     currentPage,
     setCurrentPage,
     itemsPerPage,
     setItemsPerPage,
-    filteredEvents,
-    paginatedEvents,
+    filteredProjects,
+    paginatedProjects,
     totalPages,
     hasActiveFilters,
     clearAllFilters
-  } = useEventFilters(events);
+  } = useProjectFilters(projects);
 
   const handleRetry = () => {
     refetch();
@@ -43,7 +39,7 @@ export default function Events() {
       {/* Hero Banner Section */}
       <div className="relative isolate overflow-hidden bg-gray-900">
         <img
-          src="/images/events.jpg"
+          src="/images/projects.jpg"
           alt=""
           className="absolute inset-0 -z-10 h-full w-full object-cover object-center"
         />
@@ -51,31 +47,27 @@ export default function Events() {
         <div className="w-full px-6 py-24 sm:py-32 lg:px-8 bg-gradient-to-b from-black/20 via-transparent to-black/20 z-0">
           <div className="mt-[73px] mx-auto max-w-2xl text-center">
             <h1 className="text-6xl font-bold mb-6 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
-              Events
+              Projects
             </h1>
             <p className="text-lg md:text-xl mb-8 text-white drop-shadow-[0_1.5px_3px_rgba(0,0,0,0.8)] max-w-3xl mx-auto">
-              Join me on my cosmic adventures! From furry conventions to intergalactic travels, check out my upcoming events and join the journey through space and time.
+              Explore my creative endeavors and technical projects! From software development to creative experiments, discover the things I've been working on.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Events Content Section */}
+      {/* Projects Content Section */}
       <div className="bg-gray-900 py-16">
         <div className="max-w-6xl mx-auto px-4">
           
           {/* Filters */}
-          <EventFilters
+          <ProjectsFilters
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
-            selectedFilter={selectedFilter}
-            setSelectedFilter={setSelectedFilter}
-            selectedLocation={selectedLocation}
-            setSelectedLocation={setSelectedLocation}
             sortBy={sortBy}
             setSortBy={setSortBy}
             isLoading={isLoading}
-            resultsCount={filteredEvents.length}
+            resultsCount={filteredProjects.length}
             currentPage={currentPage}
             totalPages={totalPages}
           />
@@ -85,21 +77,21 @@ export default function Events() {
             <LoadingState />
           ) : error ? (
             <ErrorState error={error} onRetry={handleRetry} />
-          ) : filteredEvents.length === 0 ? (
+          ) : filteredProjects.length === 0 ? (
             <EmptyState 
               onClearFilters={clearAllFilters} 
               hasFilters={hasActiveFilters}
             />
           ) : (
             <>
-              <EventsGrid events={paginatedEvents} />
+              <ProjectsGrid projects={paginatedProjects} />
               
               {/* Pagination */}
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
                 itemsPerPage={itemsPerPage}
-                totalItems={filteredEvents.length}
+                totalItems={filteredProjects.length}
                 onPageChange={setCurrentPage}
                 onItemsPerPageChange={setItemsPerPage}
               />
